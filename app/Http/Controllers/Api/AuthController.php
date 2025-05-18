@@ -12,7 +12,7 @@ class AuthController extends Controller
 {
     public function login()
     {
-        return 'test login';
+        return response()->json(['message' => 'Test login']);
     }
 
     public function register(Request $request)
@@ -28,7 +28,7 @@ class AuthController extends Controller
         $existingUser = User::where('email', $request->email)->exists();
         if ($existingUser) {
             throw ValidationException::withMessages([
-                'email' => 'Email already in use',
+                'email' => ['Email already in use'],
             ]);
         }
 
@@ -36,12 +36,22 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password), // Hash the password
+            'password' => Hash::make($request->password),
         ]);
 
         return response()->json([
             'message' => 'User created successfully',
-            'user' => $user, // Optional: You can return the created user object
+            'user' => $user,
         ], 201);
+    }
+
+    public function logout(Request $request)
+    {
+        // Assuming you're using Sanctum or Passport:
+        $request->user()->tokens()->delete();
+
+        return response()->json([
+            'message' => 'Logged out successfully',
+        ]);
     }
 }
