@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    //This function is  for the login for the user 
     public function login()
     {
         return response()->json(['message' => 'Test login']);
@@ -44,7 +45,7 @@ class AuthController extends Controller
             'user' => $user,
         ], 201);
     }
-
+// This function is for the logout 
     public function logout(Request $request)
     {
         // Assuming you're using Sanctum or Passport:
