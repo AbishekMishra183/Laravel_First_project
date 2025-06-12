@@ -3,37 +3,30 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    //This function is  for the login for the user 
-    public function login()
-    {
-        return response()->json(['message' => 'Test login']);
-    }
-
+    // Register new user
     public function register(Request $request)
     {
-        // Validate the input
         $request->validate([
-            'name' => 'required|min:1|max:255',
+            'name' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:6',
+            'password' => 'required',
         ]);
 
-        // Check if email already exists
-        $existingUser = User::where('email', $request->email)->exists();
+        $existingUser = User::where('email', $request->email)->first();
+
         if ($existingUser) {
             throw ValidationException::withMessages([
-                'email' => ['Email already in use'],
+                'email' => 'Email already in use',
             ]);
         }
 
-        // Create the user with hashed password
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -43,16 +36,60 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'User created successfully',
             'user' => $user,
-        ], 201);
+        ]);
     }
-// This function is for the logout 
+
+    // Login user
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['Invalid credentials'],
+            ]);
+        }
+
+        $token = $user->createToken('api-token')->plainTextToken;
+
+        return response()->json([
+            'token' => $token,
+            'user' => [
+                'name' => $user->name,
+                'email' => $user->email,
+            ],
+        ]);
+    }
+
+    // Logout user
     public function logout(Request $request)
     {
-        // Assuming you're using Sanctum or Passport:
         $request->user()->tokens()->delete();
 
         return response()->json([
             'message' => 'Logged out successfully',
+        ]);
+    }
+
+    // Get user details (authenticated user)
+    public function getUserDetails()
+    {
+        return response()->json([
+            'user' => auth()->user(),
+        ]);
+    }
+
+    // Profile endpoint without middleware
+    public function getProfile(Request $request)
+    {
+        return response()->json([
+            'message' => 'Hello from getProfile!',
+            'request_data' => $request->all(), // just to show request data if any
         ]);
     }
 }
