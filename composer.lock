@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c491b8531eec05ba41a11d9276a5749",
+    "content-hash": "5266615f0c007b03f91b8f82bca9a2be",
     "packages": [
         {
             "name": "brick/math",
@@ -6151,6 +6151,72 @@
                 }
             ],
             "time": "2025-03-14T22:35:49+00:00"
+        },
+        {
+            "name": "pelmered/fake-car",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pelmered/fake-car.git",
+                "reference": "413d2237d8e08d5579c070d0bf6e58d1e8ac16ca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pelmered/fake-car/zipball/413d2237d8e08d5579c070d0bf6e58d1e8ac16ca",
+                "reference": "413d2237d8e08d5579c070d0bf6e58d1e8ac16ca",
+                "shasum": ""
+            },
+            "require": {
+                "fakerphp/faker": "^1.10",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "larapack/dd": "^1.1",
+                "laravel/pint": "^1.18",
+                "pestphp/pest": "^3.0",
+                "pestphp/pest-plugin-drift": "3.x-dev",
+                "pestphp/pest-plugin-type-coverage": "^3.0",
+                "phpstan/phpstan": "^1.12"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Faker\\Provider\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Elmered",
+                    "email": "peter@elmered.com"
+                }
+            ],
+            "description": "Fake-Car is a Faker provider that generates fake car data for you.",
+            "keywords": [
+                "car",
+                "car-faker",
+                "fake-car",
+                "faker",
+                "vehicle"
+            ],
+            "support": {
+                "issues": "https://github.com/pelmered/fake-car/issues",
+                "source": "https://github.com/pelmered/fake-car/tree/2.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/pelmered",
+                    "type": "github"
+                },
+                {
+                    "url": "https://ko-fi.com/pelmered",
+                    "type": "ko_fi"
+                }
+            ],
+            "time": "2024-09-27T10:17:43+00:00"
         },
         {
             "name": "phar-io/manifest",
